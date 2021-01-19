@@ -5,12 +5,16 @@
 
 ![](doctrine.png)
 
+Click [here](https://discord.com/api/oauth2/authorize?client_id=800449482491035659&permissions=104512&scope=bot)
+to add bababooey bot to your discord server!
+
 ## BYOB
 _Build Your Own Bababooey (bot)_
 
-Step 0: Set up a discord account
+Step 0: Set up a discord account and server
 
-Step 1: Create a bot account with "Send Messages", "Send TTS Messages", "Attach Files", "Add Reactions" permissions.
+Step 1: Create a bot account, and add it to your server with "Send Messages", "Send TTS Messages", "Attach Files",
+"Add Reactions" permissions.
 See https://discordpy.readthedocs.io/en/latest/discord.html 
 
 Step 2: Clone this repo.
