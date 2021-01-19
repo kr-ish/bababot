@@ -1,3 +1,7 @@
+"""
+Bababooey bot
+"""
+
 import logging
 import os
 import random
@@ -6,19 +10,26 @@ from itertools import product
 import discord
 from dotenv import load_dotenv
 
-
+# Setup logging to file with desired format
 logging.basicConfig(level=logging.INFO,
                     filename='app.log',
                     format='%(asctime)s %(levelname)s:%(name)s:%(message)s',
                     datefmt='%d-%b-%y %H:%M:%S')
+
+# Load env vars
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 USER_ID_TO_DM_ON_ERROR = os.getenv('USER_ID_TO_DM_ON_ERROR')
 
+# Init client
 client = discord.Client()
 
 
-def get_all_bababooeys():
+def get_all_bababooeys() -> list:
+    """
+    Returns all permutations of "bababooey" with acceptable character/ capitalization substitutions.
+    :return: list of all bababooeys
+    """
     substitutions = {
         'b': '🅱️',
         'o': '0',
@@ -54,6 +65,7 @@ async def on_message(message):
     if message.content in ALL_BABABOOEYS:
         await message.add_reaction('🅱')  # 🅱️
 
+        # respond to bababooey with text to speech bababooey, image babaooey or random text bababooey
         if random.random() < 0.1:
             await message.channel.send('babAbooey', tts=True)
         elif random.random() < 0.2:
