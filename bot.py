@@ -91,9 +91,6 @@ async def on_message(message):
             response = random.choice(ALL_BABABOOEYS)
             await message.reply(response)
 
-    logger.info('yoyoy')
-    raise discord.DiscordException
-
 
 @client.event
 async def on_error(event, *args, **kwargs):
