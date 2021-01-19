@@ -77,7 +77,7 @@ async def on_message(message):
         return
 
     if message.content in ALL_BABABOOEYS:
-        await message.add_reaction('🅱')  # 🅱️
+        await message.add_reaction('🅱️')  # 🅱️
 
         # respond to bababooey with text to speech bababooey, image babaooey or random text bababooey
         random_float = random.random()
