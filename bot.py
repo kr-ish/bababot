@@ -80,9 +80,10 @@ async def on_message(message):
         await message.add_reaction('🅱')  # 🅱️
 
         # respond to bababooey with text to speech bababooey, image babaooey or random text bababooey
-        if random.random() < 0.1:
+        random_float = random.random()
+        if random_float < 0.1:
             await message.channel.send('babAbooey', tts=True)
-        elif random.random() < 0.2:
+        elif random_float < 0.2:
             # TODO: instead, just post github link?- discord will auto render..
             with open('doctrine.png', 'rb') as fp:
                 await message.reply(file=discord.File(fp, 'doctrine.png'))
