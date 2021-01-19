@@ -10,11 +10,25 @@ from itertools import product
 import discord
 from dotenv import load_dotenv
 
-# Setup logging to file with desired format
-logging.basicConfig(level=logging.INFO,
-                    filename='app.log',
-                    format='%(asctime)s %(levelname)s:%(name)s:%(message)s',
-                    datefmt='%d-%b-%y %H:%M:%S')
+# Create a custom logger that logs to file and to stream
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+# Create separate stream and file handlers
+stream_handler = logging.StreamHandler()
+file_handler = logging.FileHandler('error.log')
+stream_handler.setLevel(logging.DEBUG)
+file_handler.setLevel(logging.WARNING)
+
+# Create formatters and add to handlers
+log_format = logging.Formatter('%(asctime)s %(levelname)s:%(name)s:%(message)s', datefmt='%d-%b-%y %H:%M:%S')
+stream_handler.setFormatter(log_format)
+file_handler.setFormatter(log_format)
+
+# Add handlers to the logger
+logger.addHandler(stream_handler)
+logger.addHandler(file_handler)
+
 
 # Load env vars
 load_dotenv()
@@ -53,7 +67,7 @@ ALL_BABABOOEYS = get_all_bababooeys()
 
 @client.event
 async def on_ready():
-    logging.info(f'{client.user} has connected to Discord')
+    logger.info(f'{client.user} has connected to Discord')
 
 
 @client.event
@@ -76,10 +90,13 @@ async def on_message(message):
             response = random.choice(ALL_BABABOOEYS)
             await message.reply(response)
 
+    logger.info('yoyoy')
+    raise discord.DiscordException
+
 
 @client.event
 async def on_error(event, *args, **kwargs):
-    logging.exception("Ruh roh! unhandled exception:")
+    logger.exception("Ruh roh! unhandled exception:")
 
     # DM user that an error occurred if specified
     user = await client.fetch_user(int(USER_ID_TO_DM_ON_ERROR)) if USER_ID_TO_DM_ON_ERROR else None
