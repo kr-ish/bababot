@@ -85,14 +85,11 @@ async def on_message(message):
             await message.channel.send('babAbooey', tts=True)
         elif random_float < 0.2:
             # TODO: instead, just post github link?- discord will auto render..
-            with open('doctrine.png', 'rb') as fp:
-                await message.reply(file=discord.File(fp, 'doctrine.png'))
+            await message.reply(file=discord.File('doctrine.png'))
         elif random_float < 0.3:
-            with open('babaisbooey.png', 'rb') as fp:
-                await message.reply(file=discord.File(fp, 'babaisbooey.png'))
-        elif random_float < 0.32: #this one is extra, extra bad so make it rare
-            with open('noyes.png', 'rb') as fp:
-                await message.reply(file=discord.File(fp, 'noyes.png'))
+            await message.reply(file=discord.File('babaisbooey.png'))
+        elif random_float < 0.32: # this one is extra, extra bad so make it rare
+            await message.reply(file=discord.File('noyes.png'))
         else:
             response = random.choice(ALL_BABABOOEYS)
             await message.reply(response)
