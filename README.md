@@ -34,3 +34,11 @@ python bot.py
 ```
 
 Step 6. _bababooey_
+
+
+## Release History
+
+* 0.1.0
+    * "Added some hot new images to further bring glory" - @HoneyTheYellowBear123
+* 0.0.0
+    * bababooey
