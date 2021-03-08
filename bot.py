@@ -76,23 +76,25 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content in ALL_BABABOOEYS:
-        await message.add_reaction('🅱️')  # 🅱️
+    for word in message.content.split(' '):
+        if word in ALL_BABABOOEYS:
+            # await message.add_reaction('🅱️')  # 🅱️
 
-        # respond to bababooey with text to speech bababooey, image babaooey or random text bababooey
-        random_float = random.random()
-        if random_float < 0.1:
+            # respond to bababooey with text to speech bababooey, image babaooey or random text bababooey
+            # random_float = random.random()
+            # if random_float < 0.1:
             await message.channel.send('babAbooey', tts=True)
-        elif random_float < 0.2:
-            # TODO: instead, just post github link?- discord will auto render..
-            await message.reply(file=discord.File('doctrine.png'))
-        elif random_float < 0.3:
-            await message.reply(file=discord.File('babaisbooey.png'))
-        elif random_float < 0.32: # this one is extra, extra bad so make it rare
-            await message.reply(file=discord.File('noyes.png'))
-        else:
-            response = random.choice(ALL_BABABOOEYS)
-            await message.reply(response)
+            # elif random_float < 0.2:
+            #     # TODO: instead, just post github link?- discord will auto render..
+            #     await message.reply(file=discord.File('doctrine.png'))
+            # elif random_float < 0.3:
+            #     await message.reply(file=discord.File('babaisbooey.png'))
+            # elif random_float < 0.32: # this one is extra, extra bad so make it rare
+            #     await message.reply(file=discord.File('noyes.png'))
+            # else:
+            #     response = random.choice(ALL_BABABOOEYS)
+            #     await message.reply(response)
+            return
 
 
 @client.event
