@@ -114,7 +114,7 @@ async def on_error(event, *args, **kwargs):
     logger.exception("Ruh roh! unhandled exception:")
 
     # DM user that an error occurred if specified
-    user = await client.fetch_user(int(USER_ID_TO_DM_ON_ERROR)) if USER_ID_TO_DM_ON_ERROR else None
+    user = await bot.fetch_user(int(USER_ID_TO_DM_ON_ERROR)) if USER_ID_TO_DM_ON_ERROR else None
     if user:
         await user.send('bababot error! check logs')
 
