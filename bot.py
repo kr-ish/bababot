@@ -41,7 +41,7 @@ client = discord.Client()
 
 def get_all_bababooeys() -> list:
     """
-    Returns all permutations of "bababooey" with acceptable character/ capitalization substitutions.
+    Returns all permutations of "bababooey" with acceptable character substitutions.
     :return: list of all bababooeys
     """
     substitutions = {
@@ -54,9 +54,9 @@ def get_all_bababooeys() -> list:
     for c in 'bababooey':
         sub = substitutions.get(c)
         if sub is None:
-            char_possibilities.append((c, c.capitalize()))
+            char_possibilities.append((c))
         else:
-            char_possibilities.append((c, c.capitalize(), sub))
+            char_possibilities.append((c, sub))
 
     all_bababooeys = ["".join(subbed) for subbed in product(*char_possibilities)]
     return all_bababooeys
@@ -76,7 +76,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content in ALL_BABABOOEYS:
+    if message.content.lower() in ALL_BABABOOEYS:
         await message.add_reaction('🅱️')  # 🅱️
 
         # respond to bababooey with text to speech bababooey, image babaooey or random text bababooey
