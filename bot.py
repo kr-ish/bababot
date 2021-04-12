@@ -98,6 +98,9 @@ async def on_message(message):
                 response = random.choice(ALL_BABABOOEYS)
                 await message.reply(response)
 
+    # process bot commands
+    await bot.process_commands(message)
+
 
 @bot.command(name='c', help='Posts lastfm chart for the given user for the given duration. Usage: !c [last fm username] [duration - (w/m)]')
 async def fm_chart(ctx, fm_username: str, duration: str = 'w'):
