@@ -2,12 +2,15 @@
 Bababooey bot
 """
 
+from io import BytesIO
+from itertools import product
 import logging
 import os
 import random
-from itertools import product
+import urllib.request
 
 import discord
+from discord.ext import commands
 from dotenv import load_dotenv
 
 # Create a custom logger that logs to file and to stream
@@ -35,8 +38,8 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 USER_ID_TO_DM_ON_ERROR = os.getenv('USER_ID_TO_DM_ON_ERROR')
 
-# Init client
-client = discord.Client()
+# Init bot
+bot = commands.Bot(command_prefix='!')
 
 
 def get_all_bababooeys() -> list:
@@ -65,15 +68,15 @@ def get_all_bababooeys() -> list:
 ALL_BABABOOEYS = get_all_bababooeys()
 
 
-@client.event
+@bot.event
 async def on_ready():
-    logger.info(f'{client.user} has connected to Discord')
+    logger.info(f'{bot.user} has connected to Discord')
 
 
-@client.event
+@bot.event
 async def on_message(message):
     # prevent infinite bababooey :(
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
     if message.content.lower() in ALL_BABABOOEYS:
@@ -95,7 +98,18 @@ async def on_message(message):
             await message.reply(response)
 
 
-@client.event
+@bot.command(name='c', help='Posts lastfm chart for the given user for the given duration. Usage: !c [last fm username] [duration - (w/m)]')
+async def fm_chart(ctx, fm_username: str, duration: str = 'w'):
+    duration_to_tapmusic_type = {
+        'w': '7day',
+        'm': '1month',
+    }
+    tapmusic_type = duration_to_tapmusic_type[duration]
+    image = BytesIO(urllib.request.urlopen(f'https://tapmusic.net/collage.php?user={fm_username}&type={tapmusic_type}&size=5x5&caption=true').read())
+    await ctx.send(file=discord.File(image, filename=f'{fm_username}_{duration}.jpg'))
+
+
+@bot.event
 async def on_error(event, *args, **kwargs):
     logger.exception("Ruh roh! unhandled exception:")
 
@@ -104,4 +118,4 @@ async def on_error(event, *args, **kwargs):
     if user:
         await user.send('bababot error! check logs')
 
-client.run(TOKEN)
+bot.run(TOKEN)
