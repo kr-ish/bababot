@@ -107,6 +107,8 @@ async def fm_chart(ctx, fm_username: str, duration: str = 'w'):
     duration_to_tapmusic_type = {
         'w': '7day',
         'm': '1month',
+        'y': '12month',
+        'a': 'overall',
     }
     tapmusic_type = duration_to_tapmusic_type[duration]
     image = BytesIO(urllib.request.urlopen(f'https://tapmusic.net/collage.php?user={fm_username}&type={tapmusic_type}&size=5x5&caption=true').read())
