@@ -102,7 +102,7 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
-@bot.command(name='c', help='Posts lastfm chart for the given user for the given duration. Usage: !c [last fm username] [duration - (w/m)]')
+@bot.command(name='c', help='Posts lastfm chart for the given user for the given duration. Usage: !c [last fm username] [duration - (w/m/y/a)]')
 async def fm_chart(ctx, fm_username: str, duration: str = 'w'):
     duration_to_tapmusic_type = {
         'w': '7day',
