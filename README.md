@@ -38,6 +38,9 @@ Step 6. _bababooey_
 
 ## Release History
 
+* 0.2.0
+    * Added `!lfg`
+    <img src="https://i.kym-cdn.com/photos/images/original/001/899/710/52a.png" alt="lets goooo" height="3%"/>
 * 0.1.0
     * "Added some hot new images to further bring glory" - @HoneyTheYellowBear123
 * 0.0.0

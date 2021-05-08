@@ -2,6 +2,7 @@
 Bababooey bot
 """
 
+import glob
 from io import BytesIO
 from itertools import product
 import logging
@@ -66,6 +67,7 @@ def get_all_bababooeys() -> list:
 
 
 ALL_BABABOOEYS = get_all_bababooeys()
+ALL_LFG_CLIPS = glob.glob('./data/lfg/*.mp3')
 
 
 @bot.event
@@ -89,11 +91,11 @@ async def on_message(message):
                 await message.channel.send('babAbooey', tts=True)
             elif random_float < 0.2:
                 # TODO: instead, just post github link?- discord will auto render..
-                await message.reply(file=discord.File('doctrine.png'))
+                await message.reply(file=discord.File('./data/baba/doctrine.png'))
             elif random_float < 0.3:
-                await message.reply(file=discord.File('babaisbooey.png'))
+                await message.reply(file=discord.File('./data/baba/babaisbooey.png'))
             elif random_float < 0.32: # this one is extra, extra bad so make it rare
-                await message.reply(file=discord.File('noyes.png'))
+                await message.reply(file=discord.File('./data/baba/noyes.png'))
             else:
                 response = random.choice(ALL_BABABOOEYS)
                 await message.reply(response)
@@ -113,6 +115,16 @@ async def fm_chart(ctx, fm_username: str, duration: str = 'w'):
     tapmusic_type = duration_to_tapmusic_type[duration]
     image = BytesIO(urllib.request.urlopen(f'https://tapmusic.net/collage.php?user={fm_username}&type={tapmusic_type}&size=5x5&caption=true').read())
     await ctx.send(file=discord.File(image, filename=f'{fm_username}_{duration}.jpg'))
+
+
+@bot.command(name='lfg', help='Lets goooooooooo')
+async def lfg(ctx):
+    if not ALL_LFG_CLIPS:
+        # fallback to text reply if no audio clips are available
+        await ctx.reply("let's fucking GOOOO")
+    else:
+        clip = random.choice(ALL_LFG_CLIPS)
+        await ctx.send(file=discord.File(clip))
 
 
 @bot.event
