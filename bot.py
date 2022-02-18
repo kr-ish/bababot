@@ -9,6 +9,7 @@ import logging
 import os
 import random
 import urllib.request
+import ssl
 
 import discord
 from discord.ext import commands
@@ -41,6 +42,8 @@ USER_ID_TO_DM_ON_ERROR = os.getenv('USER_ID_TO_DM_ON_ERROR')
 
 # Init bot
 bot = commands.Bot(command_prefix='!')
+
+context = ssl._create_unverified_context()
 
 
 def get_all_bababooeys() -> list:
@@ -113,7 +116,8 @@ async def fm_chart(ctx, fm_username: str, duration: str = 'w'):
         'a': 'overall',
     }
     tapmusic_type = duration_to_tapmusic_type[duration]
-    image = BytesIO(urllib.request.urlopen(f'https://tapmusic.net/collage.php?user={fm_username}&type={tapmusic_type}&size=5x5&caption=true').read())
+    image = BytesIO(urllib.request.urlopen(f'https://tapmusic.net/collage.php?user={fm_username}&type={tapmusic_type}&size=5x5&caption=true', context=
+context).read())
     await ctx.send(file=discord.File(image, filename=f'{fm_username}_{duration}.jpg'))
 
 
