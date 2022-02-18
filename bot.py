@@ -116,9 +116,17 @@ async def fm_chart(ctx, fm_username: str, duration: str = 'w'):
         'a': 'overall',
     }
     tapmusic_type = duration_to_tapmusic_type[duration]
-    image = BytesIO(urllib.request.urlopen(f'https://tapmusic.net/collage.php?user={fm_username}&type={tapmusic_type}&size=5x5&caption=true', context=
-context).read())
-    await ctx.send(file=discord.File(image, filename=f'{fm_username}_{duration}.jpg'))
+    async with ctx.typing():
+        image = BytesIO(urllib.request.urlopen(
+            f'https://tapmusic.net/collage.php?user={fm_username}&type={tapmusic_type}&size=5x5&caption=true',
+            context=context).read())
+    # check if a valid image was returned
+    if len(BytesIO.getvalue(image)) < 1000:
+        await ctx.message.add_reaction('🅱️')  # 🅱️
+        await ctx.reply(f'failed to retrieve chart :( is "{fm_username}" your last.fm username? '
+                        f'if you just created your account, wait a few hours and try again')
+    else:
+        await ctx.send(file=discord.File(image, filename=f'{fm_username}_{duration}.jpg'))
 
 
 @bot.command(name='lfg', help='Lets goooooooooo')
