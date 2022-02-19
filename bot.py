@@ -8,6 +8,7 @@ from itertools import product
 import logging
 import os
 import random
+import requests
 import urllib.request
 import ssl
 
@@ -122,9 +123,18 @@ async def fm_chart(ctx, fm_username: str, duration: str = 'w'):
             context=context).read())
     # check if a valid image was returned
     if len(BytesIO.getvalue(image)) < 1000:
-        await ctx.message.add_reaction('🅱️')  # 🅱️
-        await ctx.reply(f'failed to retrieve chart :( is "{fm_username}" your last.fm username? '
-                        f'if you just created your account, wait a few hours and try again')
+        async with ctx.typing():
+            await ctx.message.add_reaction('🅱️')  # 🅱️
+            fail_msg = 'failed to retrieve chart :('
+            lastfm_user_url = f'https://www.last.fm/user/{fm_username}'
+            # TODO: r.raise_for_status and add proper exception handling for other error cases
+            r = requests.get(lastfm_user_url)
+        if r.status_code == 404:
+            # last.fm user does not exist
+            await ctx.reply(f'{fail_msg}\nis {fm_username} your last.fm username?')
+        else:
+            # user exists but no scrobbles
+            await ctx.reply(f'{fail_msg}\ncheck {lastfm_user_url} to see if your scrobbles are being scrobbled')
     else:
         await ctx.send(file=discord.File(image, filename=f'{fm_username}_{duration}.jpg'))
 
