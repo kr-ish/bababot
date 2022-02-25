@@ -91,14 +91,15 @@ async def on_message(message):
 
             # respond to bababooey with text to speech bababooey, image babaooey or random text bababooey
             random_float = random.random()
-            if random_float < 0.1:
-                await message.channel.send('babAbooey', tts=True)
-            elif random_float < 0.2:
+            if random_float < 0.05:
+                # await message.channel.send('babAbooey', tts=True) # this was scaring the 🅱️eople
+                await message.reply(file=discord.File('./data/baba/gene_bababooey.png'))
+            elif random_float < 0.10:
                 # TODO: instead, just post github link?- discord will auto render..
                 await message.reply(file=discord.File('./data/baba/doctrine.png'))
-            elif random_float < 0.3:
+            elif random_float < 0.14:
                 await message.reply(file=discord.File('./data/baba/babaisbooey.png'))
-            elif random_float < 0.32: # this one is extra, extra bad so make it rare
+            elif random_float < 0.16:  # this one is extra, extra bad so make it rare
                 await message.reply(file=discord.File('./data/baba/noyes.png'))
             else:
                 response = random.choice(ALL_BABABOOEYS)
