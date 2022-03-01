@@ -93,7 +93,7 @@ async def on_message(message):
             random_float = random.random()
             if random_float < 0.05:
                 # await message.channel.send('babAbooey', tts=True) # this was scaring the 🅱️eople
-                await message.reply(file=discord.File('./data/baba/gene_bababooey.png'))
+                await message.reply(file=discord.File('./data/baba/gene_bababooey.jpg'))
             elif random_float < 0.10:
                 # TODO: instead, just post github link?- discord will auto render..
                 await message.reply(file=discord.File('./data/baba/doctrine.png'))
